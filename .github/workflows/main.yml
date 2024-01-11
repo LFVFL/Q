@@ -1,0 +1,37 @@
+name: Python application
+
+on: 
+  schedule:
+    - cron: '0 0 * * *'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout actions
+      uses: actions/checkout@v1
+    
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.9
+        
+    - name: 安装库
+      run: |
+        pip install -r Q/requirements.txt
+        
+    - name: 爬取
+      run: |
+        python Q/Q.py ${{ secrets.URL_1 }} ${{ secrets.URL_2 }}
+        
+    - name: commit
+      run: |
+        git config --global user.email 11111@qq.com
+        git config --global user.name 444444
+        git add .
+        git commit -m "update" -a
+        
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
