@@ -112,7 +112,7 @@ for i in nodes_data:
     Temp = Cipher_AES(key, iv, cipher_method, pad_method, code_method).decrypt(node_AES).replace("vmess://", "")
     node_unAES = json.loads(base64.decodebytes(Temp.encode()).decode())
     #重命名
-    node_unAES["ps"] = node_name
+    node_unAES["ps"] = "魔法屋 "node_name
     Temp = "vmess://" + base64.encodebytes(json.dumps(node_unAES).encode()).decode()
     with open("Proxy/节点.txt", "a", encoding="UTF-8") as f:
         f.writelines(Temp.replace(' ', '').replace('\n', '') + "\n")
